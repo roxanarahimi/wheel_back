@@ -96,7 +96,7 @@ class UserController extends Controller
         $code = $user->code->code;
         if (isset($code) && $code == $request['code']) {
             $today = UserChance::where('user_id',$user['id'])
-                ->where('created_at', '<', today()->subHours(24))->get();
+                ->where('created_at', '>=', today()->subHours(24))->get();
             if (count($today)>0) {
                 $message = ["امروز شانست رو امتحان کردی. فردا میتونی دوباره تلاش کنی!"];
                 return response(['message' => $message, 'status2'=> 422], 200);
@@ -113,7 +113,7 @@ class UserController extends Controller
     public function test()
     {
         $today = UserChance::where('user_id',1)
-            ->where('created_at', '>=', today()->subHours(20))->get();
+            ->where('created_at', '>=', today()->subHours(24))->get();
         return response(count($today),200);
         try {
             $sender = "10005989";        //This is the Sender number
