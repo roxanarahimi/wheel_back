@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\UserChance;
 use Illuminate\Http\Request;
 use Kavenegar;
-
+use \App\Http\Controllers\DailyPrizeController;
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -26,12 +26,13 @@ class UserController extends Controller
     public function play(Request $request)
     {
         $user = User::where('mobile', $request['mobile'])->first();
-        $array = [
-            ['value' => '123456', 'possibility' => 1],
-            ['value' => '456789', 'possibility' => 1],
-            ['value' => '789123', 'possibility' => 1],
-            ['value' => 'pooch', 'possibility' => 100],
-        ];
+        $array =  (new DailyPrizeController)->indexx();
+//        $array = [
+//            ['value' => '123456', 'possibility' => 1],
+//            ['value' => '456789', 'possibility' => 1],
+//            ['value' => '789123', 'possibility' => 1],
+//            ['value' => 'pooch', 'possibility' => 100],
+//        ];
             $weightedValues = [];
             foreach ($array as $item) {
                 if ($item['possibility'] > 0) {
@@ -48,10 +49,17 @@ class UserController extends Controller
                         "ولی بازم فرصت داری! فردا همینجا منتظرتیم."];
                     return response(['message' => $message], 200);
                 } else {
-                    $message = ["برنده شدی!",
-                        " کد تخفیف: " . $val,
-                        "3 روز فرصت داری ازش استفاده کنی!"];
-                    return response(['message' => $message], 200);
+                    if ($val == 'pack'){
+                        $message = ["برنده شدی!",
+                            " کد تخفیف: " . $val,
+                            "3 روز فرصت داری ازش استفاده کنی!"];
+                        return response(['message' => $message], 200);
+                    }else{
+                        $message = ["برنده شدی!",
+                            " کد تخفیف: " . $val,
+                            "3 روز فرصت داری ازش استفاده کنی!"];
+                        return response(['message' => $message], 200);
+                    }
                 }
             }
     }

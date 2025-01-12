@@ -13,6 +13,15 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $guarded = ['id'];
+    public function chances()
+    {
+        return $this->hasMany(UserChance::class,'user_id','id');
+    }
+    public function prizes()
+    {
+        return $this->hasMany(UserChance::class,'user_id','id')->orderByDesc('id')
+            ->whereNot('chance', 'pooch');
+    }
     public function today()
     {
         return $this->hasMany(UserChance::class,'user_id','id')

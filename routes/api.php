@@ -14,10 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
+Route::resource('prize', 'DailyPrizeController');
+//GET           /prize                      index   users.index
+//POST          /prize                      store   users.store
+//GET           /prize/{prize}               show    users.show
+//PUT|PATCH     /prize/{user}               update  users.update
+//DELETE        /prize/{user}               destroy users.destroy
+Route::controller(App\Http\Controllers\DailyPrizeController::class)->group(function () {
+    Route::get('/index/prize', 'indexx');
+    Route::get('/active/prize/{dailyPrize}', 'activeToggle');
+    Route::get('/winners', 'winners');
+});
 Route::controller(App\Http\Controllers\UserController::class)->group(function () {
     Route::post('/play', 'play');
     Route::get('/test', 'test');
