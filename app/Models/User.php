@@ -16,7 +16,7 @@ class User extends Authenticatable
     public function today()
     {
         return $this->hasMany(UserChance::class,'user_id','id')
-            ->where('created_at', '>=', today()->subHours(24));
+            ->where('created_at', '<', today()->subHours(24));
     }
     public function code()
     {
