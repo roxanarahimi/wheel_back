@@ -59,9 +59,6 @@ class UserController extends Controller
                 }
             }
 
-        } else {
-            $message = "امروز شانست رو امتحان کردی. فردا میتونی دوباره تلاش کنی!";
-            return response(['message' => $message], 422);
         }
     }
 
@@ -104,7 +101,12 @@ class UserController extends Controller
         $user = User::where('mobile', $request['mobile'])->first();
         $code = $user->code->code;
         if (isset($code) && $code == $request['code']) {
-            return response(['message' => 'user mobile successfully verified.'], 200);
+            if (isset($user->today)) {
+                $message = "امروز شانست رو امتحان کردی. فردا میتونی دوباره تلاش کنی!";
+                return response(['message' => $message], 422);
+            } else {
+                return response(['message' => 'user mobile successfully verified.'], 200);
+            }
         } else {
             return response(['message' => 'wrong code'], 500);
 
@@ -118,7 +120,7 @@ class UserController extends Controller
             $sender = "10005989";        //This is the Sender number
             $code = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
             $result = Kavenegar::Send($sender, '09128222725', $code);
-            return response([$result,$_SERVER['SERVER_ADDR']]);
+            return response([$result, $_SERVER['SERVER_ADDR']]);
 
         } catch (\Kavenegar\Exceptions\ApiException $e) {
             // در صورتی که خروجی وب سرویس 200 نباشد این خطا رخ می دهد
