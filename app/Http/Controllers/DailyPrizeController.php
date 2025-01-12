@@ -21,7 +21,8 @@ class DailyPrizeController extends Controller
    public function indexx()
     {
         try {
-            $data = DailyPrize::select('id','value','possibility')->orderBy('id')->where('active')->get();
+            $data = DailyPrize::select('id','value','possibility','active')
+                ->orderBy('id')->where('active',true)->get();
             return $data;
         } catch (\Exceptions $exception) {
             return response($exception);
