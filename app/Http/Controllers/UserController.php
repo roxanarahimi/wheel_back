@@ -120,7 +120,7 @@ class UserController extends Controller
     {
         $today = UserChance::where('user_id',1)
             ->where('created_at', '<', today()->subHours(24))->get();
-        return $today;
+        return count($today);
         try {
             $sender = "10005989";        //This is the Sender number
             $code = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
