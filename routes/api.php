@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('prize', 'DailyPrizeController');
+Route::resource('prize', App\Http\Controllers\DailyPrizeController::class);
 //GET           /prize                      index   users.index
 //POST          /prize                      store   users.store
 //GET           /prize/{prize}               show    users.show
