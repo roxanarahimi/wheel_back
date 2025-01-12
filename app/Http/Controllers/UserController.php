@@ -113,7 +113,7 @@ class UserController extends Controller
     public function test()
     {
         $today = UserChance::where('user_id',1)
-            ->where('created_at', '<', today()->subHours(20))->get();
+            ->where('created_at', '>=', today()->subHours(20))->get();
         return response(count($today),200);
         try {
             $sender = "10005989";        //This is the Sender number
