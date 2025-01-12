@@ -52,9 +52,10 @@ class DailyPrizeController extends Controller
             return response($exception);
         }
     }
-    public function update(Request $request, DailyPrize $dailyPrize)
+    public function update(Request $request, $id)
     {
         try {
+            $dailyPrize = DailyPrize::find($id);
             $dailyPrize->update($request->all('value','possibility','active'));
             return response($dailyPrize,200);
         } catch (\Exceptions $exception) {
