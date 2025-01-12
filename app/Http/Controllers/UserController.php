@@ -27,12 +27,6 @@ class UserController extends Controller
     {
         $user = User::where('mobile', $request['mobile'])->first();
         $array =  (new DailyPrizeController)->indexx();
-//        $array = [
-//            ['value' => '123456', 'possibility' => 1],
-//            ['value' => '456789', 'possibility' => 1],
-//            ['value' => '789123', 'possibility' => 1],
-//            ['value' => 'pooch', 'possibility' => 100],
-//        ];
             $weightedValues = [];
             foreach ($array as $item) {
                 if ($item['possibility'] > 0) {
@@ -49,6 +43,8 @@ class UserController extends Controller
                         "ولی بازم فرصت داری! فردا همینجا منتظرتیم."];
                     return response(['message' => $message], 200);
                 } else {
+                    $t = DailyPrizeController::where('value',$val)->first();
+                    $t->update(['possibility',0]);
                     if ($val == 'pack'){
                         $message = ["برنده شدی!",
                             "یک عدد پک هدیه الیت",
