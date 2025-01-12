@@ -103,7 +103,7 @@ class UserController extends Controller
         if (isset($code) && $code == $request['code']) {
             $today = UserChance::where('user_id',$user['id'])
                 ->where('created_at', '<', today()->subHours(24))->get();
-            if (count($today)) {
+            if (count($today)>0) {
                 $message = ["امروز شانست رو امتحان کردی. فردا میتونی دوباره تلاش کنی!"];
                 return response(['message' => $message, 'status2'=> 422], 200);
             } else {
