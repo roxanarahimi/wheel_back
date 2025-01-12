@@ -45,7 +45,7 @@ class UserController extends Controller
                     return response(['message' => $message], 200);
                 } else {
                     $t = DailyPrize::where('value',$val)->first();
-                    $t->update(['possibility',0]);
+                    $t->update(['possibility'=>0]);
                     if ($val == 'pack'){
                         $message = ["برنده شدی!",
                             "یک عدد پک هدیه الیت",
