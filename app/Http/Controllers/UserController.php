@@ -32,8 +32,8 @@ class UserController extends Controller
             ['value' => '789123', 'possibility' => 1],
             ['value' => 'pooch', 'possibility' => 100],
         ];
-//        if (count($user->today()) == 0) {
-        if (1) {
+        if (count($user->today()) == 0) {
+//        if (1) {
             $weightedValues = [];
 
             foreach ($array as $item) {
@@ -61,7 +61,7 @@ class UserController extends Controller
 
         } else {
             $message = "امروز شانست رو امتحان کردی. فردا میتونی دوباره تلاش کنی!";
-            return response(['message' => $message], 500);
+            return response(['message' => $message], 422);
         }
     }
 
