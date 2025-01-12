@@ -18,6 +18,9 @@ class User extends Authenticatable
         return $this->hasMany(UserChance::class,'user_id','id')
             ->where('created_at', '>=', today()->subHours(24));
     }
-
+    public function code()
+    {
+        return $this->hasOne(RdsInfo::class,'user_id','id');
+    }
 
 }

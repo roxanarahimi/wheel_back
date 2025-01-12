@@ -19,5 +19,9 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::controller(App\Http\Controllers\UserController::class)->group(function () {
-    Route::get('/play', 'play');
+    Route::post('/play', 'play');
+    Route::get('/test', 'test');
+    Route::post('/register', 'register');
+    Route::post('/otp/mobile', 'oneTimePassword');
+    Route::post('/mobile/verify', 'verify');
 });
