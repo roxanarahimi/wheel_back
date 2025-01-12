@@ -27,15 +27,12 @@ class UserController extends Controller
     {
         $user = User::where('mobile', $request['mobile'])->first();
         $array = [
-            ['value' => '123456', 'possibility' => 0],
+            ['value' => '123456', 'possibility' => 1],
             ['value' => '456789', 'possibility' => 1],
             ['value' => '789123', 'possibility' => 1],
             ['value' => 'pooch', 'possibility' => 100],
         ];
-        if (count($user->today()) == 0) {
-//        if (1) {
             $weightedValues = [];
-
             foreach ($array as $item) {
                 if ($item['possibility'] > 0) {
                     for ($i = 0; $i < $item['possibility']; $i++) {
@@ -43,7 +40,6 @@ class UserController extends Controller
                     }
                 }
             }
-
             if (!empty($weightedValues)) {
                 $val = $weightedValues[array_rand($weightedValues)];
                 UserChance::create(['user_id' => $user['id'], 'chance' => $val]);
@@ -58,8 +54,6 @@ class UserController extends Controller
                     return response(['message' => $message], 200);
                 }
             }
-
-        }
     }
 
     public function oneTimePassword(Request $request)
