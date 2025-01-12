@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DailyPrize;
 use App\Models\RdsInfo;
 use App\Models\User;
 use App\Models\UserChance;
@@ -43,7 +44,7 @@ class UserController extends Controller
                         "ولی بازم فرصت داری! فردا همینجا منتظرتیم."];
                     return response(['message' => $message], 200);
                 } else {
-                    $t = DailyPrizeController::where('value',$val)->first();
+                    $t = DailyPrize::where('value',$val)->first();
                     $t->update(['possibility',0]);
                     if ($val == 'pack'){
                         $message = ["برنده شدی!",
