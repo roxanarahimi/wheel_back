@@ -118,7 +118,7 @@ class UserController extends Controller
 
     public function test()
     {
-        $today = UserChance::where('user_id','id')
+        $today = UserChance::where('user_id',1)
             ->where('created_at', '<', today()->subHours(24))->get();
         return $today;
         try {
