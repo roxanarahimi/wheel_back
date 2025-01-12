@@ -101,7 +101,9 @@ class UserController extends Controller
         $user = User::where('mobile', $request['mobile'])->first();
         $code = $user->code->code;
         if (isset($code) && $code == $request['code']) {
-            if (isset($user->today)) {
+            $today = UserChance::where('user_id','id')
+                ->where('created_at', '<', today()->subHours(24))->first();
+            if ($today) {
                 $message = ["امروز شانست رو امتحان کردی. فردا میتونی دوباره تلاش کنی!"];
                 return response(['message' => $message, 'status2'=> 422], 200);
             } else {
