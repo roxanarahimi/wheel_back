@@ -103,7 +103,7 @@ class UserController extends Controller
         if (isset($code) && $code == $request['code']) {
             if (isset($user->today)) {
                 $message = "امروز شانست رو امتحان کردی. فردا میتونی دوباره تلاش کنی!";
-                return response(['message' => $message], 422);
+                return response(['message' => $message, 'status2'=> 422], 200);
             } else {
                 return response(['message' => 'user mobile successfully verified.'], 200);
             }
