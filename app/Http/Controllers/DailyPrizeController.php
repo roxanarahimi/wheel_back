@@ -55,7 +55,7 @@ class DailyPrizeController extends Controller
     public function update(Request $request, DailyPrize $dailyPrize)
     {
         try {
-            $dailyPrize->update($request->all());
+            $dailyPrize->update($request->all('value','possibility','active'));
             return response($dailyPrize,200);
         } catch (\Exceptions $exception) {
             return response($exception);
