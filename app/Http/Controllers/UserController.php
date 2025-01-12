@@ -114,7 +114,22 @@ class UserController extends Controller
 
     public function test()
     {
-        return response($_SERVER['SERVER_ADDR'],200);
+        try {
+            $sender = "10005989";        //This is the Sender number
+            $code = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+            $result = Kavenegar::Send($sender, '09128222725', $code);
+            return response([$result,$_SERVER['SERVER_ADDR']]);
+
+        } catch (\Kavenegar\Exceptions\ApiException $e) {
+            // در صورتی که خروجی وب سرویس 200 نباشد این خطا رخ می دهد
+            echo $e->errorMessage();
+        } catch (\Kavenegar\Exceptions\HttpException $e) {
+            // در زمانی که مشکلی در برقرای ارتباط با وب سرویس وجود داشته باشد این خطا رخ می دهد
+            echo $e->errorMessage();
+        } catch (\Exceptions $ex) {
+            // در صورت بروز خطایی دیگر
+            echo $ex->getMessage();
+        }
     }
 
 }
