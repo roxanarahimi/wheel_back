@@ -51,8 +51,8 @@ class UserController extends Controller
                 } else {
                     if ($val == 'pack'){
                         $message = ["برنده شدی!",
-                            " کد تخفیف: " . $val,
-                            "3 روز فرصت داری ازش استفاده کنی!"];
+                            "یک عدد پک هدیه الیت",
+                            "برای رسوندن هدیه ت باهات تماس میگیریم در دسترس باش."];
                         return response(['message' => $message], 200);
                     }else{
                         $message = ["برنده شدی!",
