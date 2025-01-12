@@ -44,7 +44,7 @@ class UserController extends Controller
                         "ولی بازم فرصت داری! فردا همینجا منتظرتیم."];
                     return response(['message' => $message], 200);
                 } else {
-                    $t = DailyPrize::where('value',$val)->first();
+                    $t = DailyPrize::where('possibility','>',0)->where('value',$val)->first();
                     $t->update(['possibility'=>0]);
                     if ($val == 'pack'){
                         $message = ["برنده شدی!",
