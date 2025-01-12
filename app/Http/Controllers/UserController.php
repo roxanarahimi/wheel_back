@@ -114,7 +114,7 @@ class UserController extends Controller
 
     public function test()
     {
-        return response($_SERVER['REMOTE_ADDR'],200);
+        return response($_SERVER['SERVER_ADDR'],200);
     }
 
 }
