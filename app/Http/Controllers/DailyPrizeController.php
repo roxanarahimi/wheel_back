@@ -31,7 +31,7 @@ class DailyPrizeController extends Controller
    public function winners(Request $request)
     {
         try {
-            if (isset($request['mobile'])){
+            if (isset($request['mobile'])&&$request['mobile']!=''){
                 $data = User::select('id','mobile')
                     ->orderByDesc('id')->where('mobile',$request['mobile'])
                     ->with('prizes:chance as prize,created_at as date,user_id')->paginate(200);
