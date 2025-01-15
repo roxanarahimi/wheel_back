@@ -32,6 +32,19 @@ class DailyPrizeController extends Controller
         }
     }
 
+    public function trys(Request $request)
+    {
+        try {
+
+            $info = UserChance::orderByDesc('id')->paginate(200);
+            $data = UserChanceResource::collection($info);
+
+            return $info;
+        } catch (\Exceptions $exception) {
+            return response($exception);
+        }
+    }
+
     public function winners(Request $request)
     {
         try {

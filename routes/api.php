@@ -23,6 +23,7 @@ Route::resource('prize', App\Http\Controllers\DailyPrizeController::class);
 Route::controller(App\Http\Controllers\DailyPrizeController::class)->group(function () {
     Route::get('/index/prize', 'indexx');
     Route::get('/active/prize/{dailyPrize}', 'activeToggle');
+    Route::get('/trys', 'trys');
     Route::get('/winners', 'winners');
 });
 Route::controller(App\Http\Controllers\UserController::class)->group(function () {
