@@ -36,7 +36,7 @@ class DailyPrizeController extends Controller
                     ->orderByDesc('id')->where('mobile',$request['mobile'])
                     ->with('prizes:chance as prize,created_at as date,user_id')->paginate(200);
             }else{
-                $data = UserChance::select('chance as prize','created_at as date','user_id')
+                $data = UserChance::select('chance as prize',explode(' ',(new DateController)->toPersian('created_at'))[0].' as date','user_id')
                     ->orderByDesc('id')->with('user:id,mobile')->whereNot('chance','pooch')->paginate(200);
             }
             return $data;
