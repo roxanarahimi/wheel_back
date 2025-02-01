@@ -105,7 +105,7 @@ class DailyPrizeController extends Controller
     public function refresh()
     {
         try {
-            $prizes = DailyPrize::whereNot('value', 'pooch')->get();
+            $prizes = DailyPrize::where('id','>', 1)->get();
             foreach ($prizes as $item) {
                 $item->update(['possibility'=> !$item['possibility']]);
             }
