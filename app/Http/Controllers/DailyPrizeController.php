@@ -107,7 +107,7 @@ class DailyPrizeController extends Controller
         try {
             $prizes = DailyPrize::where('id','>', 1)->get();
             foreach ($prizes as $item) {
-                $item->update(['possibility'=> 0]);
+                $item->update(['possibility'=> 1]);
             }
             $datetime = new \DateTime("now", new \DateTimeZone("Asia/Tehran"));
             $nowTime = $datetime->format('Y-m-d G:i');
