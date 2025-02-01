@@ -107,7 +107,7 @@ class DailyPrizeController extends Controller
         try {
             $prizes = DailyPrize::whereNot('value', 'pooch')->get();
             foreach ($prizes as $item) {
-                $item->update(['possibility'=> 1]);
+                $item->update(['possibility'=> !$item['possibility']]);
             }
             $datetime = new \DateTime("now", new \DateTimeZone("Asia/Tehran"));
             $nowTime = $datetime->format('Y-m-d G:i');
