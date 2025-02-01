@@ -14,7 +14,7 @@ class DailyPrizeController extends Controller
     public function index()
     {
         try {
-            $data = DailyPrize::select('id', 'value', 'possibility')->orderBy('id')->get();
+            $data = DailyPrize::select('id', 'value', 'possibility','updated_at')->orderBy('id')->get();
             return response($data, 200);
         } catch (\Exceptions $exception) {
             return response($exception);
@@ -99,6 +99,25 @@ class DailyPrizeController extends Controller
             return response($data, 200);
         } catch (\Exceptions $exception) {
             return response($exception);
+        }
+    }
+
+    public function refresh()
+    {
+        try {
+            $prizes = DailyPrize::whereNot('value', 'pooch')->get();
+            foreach ($prizes as $item) {
+                $item->update(['possibility'=> 1]);
+            }
+            $datetime = new \DateTime("now", new \DateTimeZone("Asia/Tehran"));
+            $nowTime = $datetime->format('Y-m-d G:i');
+            echo $nowTime . ' - Tehran Time: OK;
+';
+        }catch (\Exception $exception){
+            $datetime = new \DateTime("now", new \DateTimeZone("Asia/Tehran"));
+            $nowTime = $datetime->format('Y-m-d G:i');
+            echo $nowTime . ' - Tehran Time: ' . $exception->getMessage() . '
+';
         }
     }
 
