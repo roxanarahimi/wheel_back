@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DailyPrizeResource;
 use App\Http\Resources\UserChanceResource;
 use App\Http\Resources\UserResource;
 use App\Models\DailyPrize;
@@ -15,10 +16,7 @@ class DailyPrizeController extends Controller
     {
         try {
             $data = DailyPrize::select('id', 'value', 'possibility','updated_at')->orderBy('id')->get();
-            foreach($data as $item){
-                $item->updated_at =  explode(' ',(new DateController)->toPersian($item->updated_at))[0].'T'.explode(' ',(new DateController)->toPersian($item->updated_at))[1];
-            }
-            return response($data, 200);
+            return response(DailyPrizeResource::collection($data), 200);
         } catch (\Exceptions $exception) {
             return response($exception);
         }
