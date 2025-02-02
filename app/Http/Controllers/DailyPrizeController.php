@@ -16,7 +16,7 @@ class DailyPrizeController extends Controller
         try {
             $data = DailyPrize::select('id', 'value', 'possibility','updated_at')->orderBy('id')->get();
             foreach($data as $item){
-                $item->updated_at =  explode(' ',(new DateController)->toPersian($item->updated_at))[0].' '.explode(' ',(new DateController)->toPersian($item->updated_at))[1];
+                $item->updated_at =  explode(' ',(new DateController)->toPersian($item->updated_at))[0].'T'.explode(' ',(new DateController)->toPersian($item->updated_at))[1];
             }
             return response($data, 200);
         } catch (\Exceptions $exception) {
