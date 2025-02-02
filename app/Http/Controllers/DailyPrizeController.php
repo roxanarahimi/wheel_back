@@ -6,6 +6,7 @@ use App\Http\Resources\DailyPrizeResource;
 use App\Http\Resources\UserChanceResource;
 use App\Http\Resources\UserResource;
 use App\Models\DailyPrize;
+use App\Models\RdsInfo;
 use App\Models\User;
 use App\Models\UserChance;
 use Illuminate\Http\Request;
@@ -15,18 +16,18 @@ class DailyPrizeController extends Controller
     public function index()
     {
         try {
-            $data = DailyPrize::select('id', 'value', 'possibility','updated_at')->orderBy('id')->get();
+            $data = DailyPrize::select('id', 'value', 'possibility', 'type', 'updated_at')->orderBy('id')->get();
             return response(DailyPrizeResource::collection($data), 200);
         } catch (\Exceptions $exception) {
             return response($exception);
         }
     }
 
-    public function indexx()
+    public function indexx($type)
     {
         try {
-            $data = DailyPrize::select('id', 'value', 'possibility', 'active')
-                ->orderBy('id')->where('active', true)->get();
+            $data = DailyPrize::select('id', 'value', 'possibility', 'type', 'active')
+                ->orderBy('id')->where('type', $type)->where('active', true)->get();
             return $data;
         } catch (\Exceptions $exception) {
             return response($exception);
@@ -65,7 +66,7 @@ class DailyPrizeController extends Controller
     public function store(Request $request)
     {
         try {
-            $data = DailyPrize::create($request->all('value', 'possibility'));
+            $data = DailyPrize::create($request->all('value', 'possibility', 'type'));
             return response($data, 201);
         } catch (\Exceptions $exception) {
             return response($exception);
@@ -76,7 +77,7 @@ class DailyPrizeController extends Controller
     {
         try {
             $dailyPrize = DailyPrize::find($id);
-            $dailyPrize->update($request->all('value', 'possibility', 'active'));
+            $dailyPrize->update($request->all('value', 'possibility', 'type', 'active'));
             return response($dailyPrize, 200);
         } catch (\Exceptions $exception) {
             return response($exception);
@@ -106,19 +107,27 @@ class DailyPrizeController extends Controller
     public function refresh()
     {
         try {
-            $prizes = DailyPrize::where('id','>', 1)->get();
+            $prizes = DailyPrize::whereNot('value', 'pooch')->get();
             foreach ($prizes as $item) {
-                $item->update(['possibility'=> 1]);
+                $item->update(['possibility' => 1]);
             }
             $datetime = new \DateTime("now", new \DateTimeZone("Asia/Tehran"));
             $nowTime = $datetime->format('Y-m-d G:i');
             echo $nowTime . ' - Tehran Time: OK;
 ';
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             $datetime = new \DateTime("now", new \DateTimeZone("Asia/Tehran"));
             $nowTime = $datetime->format('Y-m-d G:i');
             echo $nowTime . ' - Tehran Time: ' . $exception->getMessage() . '
 ';
+        }
+    }
+
+    public function rds()
+    {
+        $data = RdsInfo::orderByDesc('id')->get();
+        foreach ($data as $item) {
+            $item->delete();
         }
     }
 

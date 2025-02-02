@@ -27,7 +27,7 @@ class UserController extends Controller
     public function play(Request $request)
     {
         $user = User::where('mobile', $request['mobile'])->first();
-        $array =  (new DailyPrizeController)->indexx();
+        $array =  (new DailyPrizeController)->indexx($request['type']);
             $weightedValues = [];
             foreach ($array as $item) {
                 if ($item['possibility'] > 0) {
@@ -38,7 +38,7 @@ class UserController extends Controller
             }
             if (!empty($weightedValues)) {
                 $val = $weightedValues[array_rand($weightedValues)];
-                UserChance::create(['user_id' => $user['id'], 'chance' => $val]);
+                UserChance::create(['user_id' => $user['id'], 'chance' => $val, 'type' => $request['type']]);
                 if ($val == 'pooch') {
                     $message = ["این بار شانس باهات یار نبود...",
                         "ولی بازم فرصت داری! فردا همینجا منتظرتیم."];
@@ -46,10 +46,16 @@ class UserController extends Controller
                 } else {
                     $t = DailyPrize::where('possibility','>',0)->where('value',$val)->first();
                     $t->update(['possibility'=>0]);
+                    $brand = '';
+                    switch($request['type']){
+                        case 'osareh':$brand = 'الیت';break;
+                        case 'ocopa':$brand = 'اوکوپا';break;
+                        case 'copa':$brand = 'کوپا';break;
+                    }
                     if ($val == 'pack'){
                         $message = ["برنده شدی!",
-                            "یک عدد پک هدیه الیت",
-                            "برای رسوندن هدیه ت باهات تماس میگیریم در دسترس باش."];
+                            "یک عدد پک هدیه ".$brand,
+                            "برای ارسال هدیه ت باهات تماس میگیریم در دسترس باش."];
                         return response(['message' => $message], 200);
                     }else{
                         $message = ["برنده شدی!",

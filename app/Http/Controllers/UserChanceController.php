@@ -13,7 +13,8 @@ class UserChanceController extends Controller
         try {
             $chance = UserChance::create([
                 'user_id' => $request['user_id'],
-                'chance' => $request['chance']
+                'chance' => $request['chance'],
+                'type' => $request['type']
             ]);
             return response($chance,200);
         }catch (\Exception $exception){

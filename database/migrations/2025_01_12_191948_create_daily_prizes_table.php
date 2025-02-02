@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('daily_prizes', function (Blueprint $table) {
             $table->id();
+            $table->string('type');
             $table->string('value');
             $table->integer('possibility');
             $table->boolean('active')->default(1);
