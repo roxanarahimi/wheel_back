@@ -84,7 +84,7 @@ class UserController extends Controller
                 "code" => $code
             ]);
             $message = "کد تایید شما: " . $code . "
-" . "گردونه شانس الیت";        //The body of SMS
+" . "گردونه شانس";        //The body of SMS
             $result = Kavenegar::Send($sender, $request['mobile'], $message);
 
             return response($result);
