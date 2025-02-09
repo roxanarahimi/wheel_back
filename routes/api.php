@@ -25,6 +25,7 @@ Route::controller(App\Http\Controllers\DailyPrizeController::class)->group(funct
     Route::get('/active/prize/{dailyPrize}', 'activeToggle');
     Route::get('/trys', 'trys');
     Route::get('/winners', 'winners');
+    Route::get('/refresh', 'refresh');
 });
 Route::controller(App\Http\Controllers\UserController::class)->group(function () {
     Route::post('/play', 'play');
