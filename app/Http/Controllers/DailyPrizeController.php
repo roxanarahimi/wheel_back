@@ -54,12 +54,8 @@ class DailyPrizeController extends Controller
                 $info = User::orderByDesc('id')->where('mobile', $request['mobile'])->first();
                 $info = new UserResource($info);
             } else {
-                if($request['clean'] && $request['clean']==1){
-                    $info = UserChance::orderByDesc('id')->whereNot('chance', 'pooch')->pluck('mobile')->toArray();
-                }else{
-                    $info = UserChance::orderByDesc('id')->whereNot('chance', 'pooch')->paginate(200);
-                    $data = UserChanceResource::collection($info);
-                }
+                $info = UserChance::orderByDesc('id')->whereNot('chance', 'pooch')->paginate(200);
+                $data = UserChanceResource::collection($info);
             }
             return $info;
         } catch (\Exceptions $exception) {
@@ -111,7 +107,7 @@ class DailyPrizeController extends Controller
     public function refresh()
     {
         try {
-            $prizes = DailyPrize::where('value','!=', 'pooch')->get();
+            $prizes = DailyPrize::where('value', '!=', 'pooch')->get();
             foreach ($prizes as $item) {
                 $item->update(['possibility' => 1]);
             }
