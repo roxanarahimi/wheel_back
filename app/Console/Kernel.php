@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('app:daily-update-prizes')
 //            ->dailyAt('00:00')
-            ->everyMinute()
+            ->everyFiveSeconds()
             ->appendOutputTo('scheduler.log')
             ->timezone('Asia/Tehran');
     }
