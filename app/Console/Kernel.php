@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('app:daily-update-prizes')
-            ->dailyAt('02:55')
-            ->everyFiveSeconds()
+            ->dailyAt('02:57')
+//            ->everyFiveSeconds()
             ->appendOutputTo('scheduler.log')
             ->timezone('Asia/Tehran');
     }
